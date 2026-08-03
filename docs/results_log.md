@@ -118,3 +118,32 @@ is the paper.
   R2 or the ICC from a mixed model with dataset as a random effect before
   submission. The bimodality is too strong to be an artefact, but the headline
   number will move.
+
+## Added 2026-08-03 — the ICC attempt FAILED, do not use it
+
+`src/R/07_icc.R` returns ICC 92.8%–99.5% (median 98.6%) with sigma2_u from 42.5
+to 642.8. **These are degenerate fits, not results.**
+
+The logistic ICC is sigma2_u / (sigma2_u + pi^2/3), and pi^2/3 = 3.29. Once
+sigma2_u reaches the hundreds the ICC is driven to 1 arithmetically, whatever
+the data say. The cause is separation: a large share of datasets sit at exactly
+k = 0 or k = n, the logit is +-Inf for those, and glmer pushes the random-effect
+variance to the numerical boundary. The script did not check convergence
+warnings, only errors, so the failure printed as a clean table.
+
+**Neither variance model is usable on this outcome.** The one-way ANOVA R2 is
+optimistic with hundreds of groups; the binomial GLMM degenerates under the same
+bimodality that is the finding. Do not report either.
+
+**Report description instead.** The bimodality is visible without a model:
+- share of datasets below 1% usable: 30.4%–82.6% across taxa
+- share above 99% usable: 3.2%–41.4%
+- every group has p10 = 0.0%
+
+If a single index is wanted, use a Gini coefficient or the entropy of the
+per-dataset usable share, both of which are assumption-free and do not degenerate
+under separation.
+
+**Process note.** The ICC was proposed as the more defensible statistic without
+first checking whether the model applies to data with this much separation. Check
+model applicability before proposing a replacement statistic, not after.
