@@ -147,3 +147,24 @@ under separation.
 **Process note.** The ICC was proposed as the more defensible statistic without
 first checking whether the model applies to data with this much separation. Check
 model applicability before proposing a replacement statistic, not after.
+
+## Added 2026-08-03 — the dataset effect, measured without a model
+
+| id | claim | evidence |
+|---|---|---|
+| C8f | **Knowing the publisher removes a median 59% of the uncertainty about whether a record is usable.** Uncertainty coefficient U = 1 - H(usable|dataset)/H(usable) runs 0.459-0.803 across twelve groups (median 0.593). | `src/R/08_dataset_effect.R` |
+| C8g | **None of it is a many-groups artefact.** A permutation null holding dataset sizes and the total usable count fixed gives U = 0.000 in all twelve groups; the excess equals the statistic. Validated on synthetic data: 600 datasets with no real effect give U = 0.002 against a null of 0.002. | same |
+| C9f | 57.3%-88.0% of datasets (median 69.3%) sit in a pure regime -- either essentially nothing usable or essentially everything. Gini of the per-dataset usable share runs 0.516-0.931. | same |
+
+**Report these, not the failed variance models.** The uncertainty coefficient
+works precisely because separation is not a problem for it: a dataset at 0% or
+100% contributes zero conditional entropy, which is the finding rather than an
+obstacle. Worth a methods note -- anyone measuring a "publisher effect" on data
+this bimodal will hit the same wall with ANOVA and with a GLMM.
+
+**Figure 1 candidate:** `results/dataset_regimes.png`, twelve histograms of the
+per-dataset usable share. The bimodality is visible without any model.
+
+**Follow-up worth one query:** bats are the outlier (U = 0.803, 36.7% of datasets
+fully usable). Likely acoustic monitoring published with a fixed detection
+radius. Confirm before using it as an illustration.
