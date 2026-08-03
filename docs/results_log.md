@@ -97,3 +97,24 @@ aggregate number is actively misleading here.
 **Consequence for the framing.** Two ecologists working on the same species from
 different sources get opposite partitions, and neither can anticipate it. That
 is the paper.
+
+## Added 2026-08-03 — C8 replicates across taxa
+
+| id | claim | evidence |
+|---|---|---|
+| C8r | **C8 replicates in all twelve groups.** Dataset identity explains 47.3%–82.8% of the variance in whether a record is usable (median 61.1%). Crayfish, at 51.9%, sit near the LOW end — they are a conservative case, not an outlier. | `src/R/06_c8_replication.R`, accessed 2026-08-03 |
+| C9r | The bimodality is general, not a crayfish quirk: 30.4%–82.6% of datasets have essentially no usable records, while 3.2%–41.4% are essentially all usable. Every group has p10 = 0.0%. | same |
+| — | **Method validation:** facet-based per-dataset counts reproduce the download-based measurement for crayfish (R2 51.9% vs 52.2%; usable 17.4% in both). The facet route measures the same quantity without downloading. | same |
+
+**Caveats to carry into the manuscript.**
+- Four groups (dragonflies, orchids, mosses, bats) hit the 500-dataset facet
+  cap, so only the largest publishers are seen. Small publishers are more
+  heterogeneous, so this biases R2 DOWNWARD — conservative, but state it, and
+  re-run those four at a higher cap to show stability.
+- Bats at 82.8% with 41.4% of datasets fully usable is worth explaining rather
+  than reporting bare; likely acoustic monitoring with a fixed detection radius.
+- **The R2 is optimistic by construction:** a one-way ANOVA on a binary outcome
+  with up to 500 groups spends 500 degrees of freedom. Replace with an adjusted
+  R2 or the ICC from a mixed model with dataset as a random effect before
+  submission. The bimodality is too strong to be an artefact, but the headline
+  number will move.
