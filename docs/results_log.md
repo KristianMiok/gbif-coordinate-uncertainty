@@ -1,0 +1,81 @@
+# Results ledger
+
+One line per claim. **Nothing enters a manuscript from here without being
+re-run.** Killed items stay in the file — they are the reason not to repeat the
+work.
+
+Last updated 2026-08-03.
+
+---
+
+## Established
+
+| id | claim | evidence | script |
+|---|---|---|---|
+| C1 | Change of support is unbiased with **overlapping** per-record supports. Disjointness in Hefley (2017) / Walker (2020) is a property of their data (PLSS sections, administrative units), not a requirement of the estimator. | bias −0.001, SD 0.018, 95% coverage 0.965, n = 200 replicates; 94.1% of raster cells claimed by >1 disc, max 68 discs per cell | `src/python/cos_overlap_test.py` |
+| C2 | The published COS likelihood **cannot estimate the radius**. ∫_{A_i}λ grows like r² while the offset ∫_S λ is r-free, so the profile is monotone and pins at the search bound. r becomes a parameter only under a normalised (reporting-model) kernel, where total mass is preserved. | first run returned r̂ = 32.00 (grid maximum) in all 9 cells; interior maximum after normalising | `src/python/p4_effort_confound.py` (see the docstring of `disc_kernel_fft`) |
+| C3 | Identifiability of the radius tracks the ratio of radius to predictor autocorrelation range — the Naimi (2011) condition restated as an identifiability statement. | 2-log-unit width 0.02 → 0.17 → 0.81 as r/SA falls 4 → 1 → 0.25; predicted in advance in the pre-registration | `src/python/p4_effort_confound.py` |
+| C4 | Empirical partition of GBIF crayfish at 1 km: 42.7% inert (radius smaller than half a cell, correction impossible and unnecessary), 28.7% no radius reported, 20.9% usable for COS, 7.7% candidate grid centroids. At 90 m the COS-relevant share rises to 25.6%. | 507,980 records, GBIF DOI **10.15468/dl.99ezk2** | `src/R/01_...`, `src/R/02_...` |
+| C5a | Documented geocoder defaults (301, 999, 3036, 9999) survive a `r < 1000` filter at a **higher** rate than real measurements (79.4% vs 73.7%). 999 in particular is below the threshold and passes untouched. A threshold cannot distinguish a software artefact from a measurement. | 1,098 records carry a documented default; 3036 sits at the 75th percentile of the reported-radius distribution | `src/R/03_precision_support.R` |
+| C5b | 17,137 records (4.7% of reporting) claim a radius smaller than their own coordinate rounding can carry. Median understatement 1.3×, 90th percentile 11.2×. Dominated by records claiming r = 5000 while given to one decimal. | — | `src/R/03_precision_support.R` |
+
+## Killed
+
+| what | why | date |
+|---|---|---|
+| "we avoid assuming an error distribution" as a novelty claim | uniform-on-disc **is** a distribution; the real distinction is geographic vs covariate space, and Hefley (2017) already specifies error geographically | 2026-08-03 |
+| per-record heterogeneous radius as the differentiator vs `refitME` | `refitME`'s `sigma.sq.u` is per **variable**, not per observation, so refitME is homoscedastic across records — but Hefley's framework takes a per-record polygon natively, so this differentiates against the wrong opponent | 2026-08-03 |
+| FFT convolution as a general speed-up | loses to a naive per-record loop below ~150k records; wins 5× at n = 1M. Ship naive as default, FFT above a measured threshold | 2026-08-03 |
+| sparse evaluation on the union of discs | at n = 100k the union covers 97.3% of the raster; sparse indexing is 5–13× **slower** | 2026-08-03 |
+| coarsening the global offset ∫_S λ | Jensen: averaging x then exponentiating underestimates by 11.6%, biasing β₀ | 2026-08-03 |
+| **P4** — radius and sampling effort are inseparable | not confirmed. Where the profile is sharp (SA = 2, 8) effort moves r̂ within noise. The apparent drift was confined to the cell where r̂ has SD 5–12 on a 1.5–32 grid, i.e. where the estimator has no information. The pre-registered verdict rule was itself wrong (no identifiability precondition, no MCSE comparison) — corrected in Amendment 1 | 2026-08-03 |
+| √2 grid-centroid signature | independent check failed: 72.3% coordinate duplication in the candidate subset vs 68.9% elsewhere. Baseline is saturated because crayfish are monitored at fixed localities, so the test had no power. **Do not build a lattice detector — GridDER (Ecological Informatics 2023) already does this.** | 2026-08-03 |
+| "NA as an informative third state" as a **method** | The second available signal — coordinate decimals — is informative only in the few-decimals direction. For NA records the bound is a *lower* bound with median 0.7 m, i.e. no constraint. Using it as a support would manufacture false precision (δ_size < 1). Survives as a **finding** (28.7% is irreducibly indeterminate) and as an identifiability limit in the Discussion, not as a method | 2026-08-03 |
+
+## Open
+
+| id | question | next action |
+|---|---|---|
+| C6 | How does COS compare with the existing alternatives — threshold filter, naive point, and Smith et al. (2023) NGP/NEP — on the same virtual species? | **the keystone; nothing else should start before it** |
+| — | Does the reporting-model kernel (C2) actually recover β₁ better than plain COS when the radius is misspecified? | narrow δ_size test; only if the draft needs C2 to carry weight |
+| — | Second taxon. m20 was already criticised for one system; crayfish report a radius 71.3% of the time against Marcer et al.'s 18% for preserved specimens, so this dataset is **not** representative | Odonata is already in hand from m20 |
+| — | Are the 17,137 internally inconsistent records (C5b) real false precision, or publishers generalising coordinates for protected species? | break down by `datasetKey` before any claim |
+
+## Method notes worth keeping
+
+- The correct term is **Berkson error**, not "location error": the truth lies
+  inside the reported region, so the error is independent of the observed value.
+  Berkson error is benign for linear models but not for nonlinear ones, and SDMs
+  have a log link.
+- Berkson *misspecification* already has a literature (arXiv 2306.01468 and the
+  robust-Bayesian line). What is absent is the **spatial** case, where the
+  support has geometry.
+- Both shipped implementations aggregate by a partition key — `aggregate(raster,
+  fact=)` in Walker's simulation, a `data.table` group-by on a rasterised
+  section-ID layer in the CWD analysis. Neither can represent overlapping
+  supports, so C1 is real at the level of what can be computed.
+- Walker's reported 5.5 h runtime is not the cost of COS: it is 24 raster layers
+  (4 ages × 2 sexes × marked bivariate structure) over 8.59M cells, in R. The
+  presence-only equivalent runs in ~2 minutes in numpy on a laptop.
+
+## Added 2026-08-03 (evening) — C6 closed
+
+| id | claim | evidence |
+|---|---|---|
+| C6a | Ignoring reported uncertainty is the only error that matters for **bias**. Threshold, NEP and COS all recover b1 = 1.00 ± 0.01 across all nine design cells; naive attenuates to 0.43–0.81. | `src/python/c6_comparison.py`, 30 reps |
+| C6b | The applicability boundary is real: spread between best and worst method is 0.185–0.566 when radius >> autocorrelation range, and 0.012–0.025 when radius << range. Factor of ~20. | same |
+| C6c | On **RMSE**, COS wins all 12 cells of the sample-size sweep, but the gain tracks the FRACTION OF IMPRECISE RECORDS, not sample size: ~5% at 25% coarse, ~10% at 50%, ~25% at 75%, essentially flat in n. | `src/python/c6b_samplesize.py`, 200 reps |
+| C6d | NEP (Smith et al. 2023) tracks the threshold filter almost exactly (RMSE 0.437 vs 0.447 at the hardest cell). It retains the records but not their information: assigning each imprecise record the environment nearest the precise-record mean adds near-mean covariate values, which carry almost nothing about the slope. | same |
+| C6e | Range inflation is the decision-relevant metric, not RMSE. Naive inflates predicted suitable area by 64–72% at only 25% imprecise records, and 14–17x at 75%, independent of sample size. All three corrections hold inflation at 1.00. | both scripts |
+
+**Calibration to the crayfish data — state this in the paper.** At 1 km, ~25% of
+reporting records fall in the COS-relevant class, which puts the expected RMSE
+gain of COS over a threshold filter at 4–7%. At 90 m the class is ~36% and the
+gain perhaps 10%. The COS advantage on this dataset is modest. The strong claim
+is about range inflation under the naive treatment, not about estimator choice
+among the corrections.
+
+**Framing correction.** The C6 design was built to test Smith et al.'s small-n
+claim and used the wrong axis. Their regime (fewer than ~15–20 precise records)
+turned out not to govern the comparison; the imprecise fraction does. Report the
+imprecise fraction, not the sample size, as the applicability variable.

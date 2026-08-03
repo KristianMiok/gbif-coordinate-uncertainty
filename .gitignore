@@ -1,0 +1,23 @@
+# data — cite the DOI instead
+*.zip
+*.csv
+*.rds
+*.parquet
+data/*
+!data/README.md
+
+# script output
+results/*
+!results/.gitkeep
+*_out.txt
+*.png
+
+# environments
+.venv/
+.venv-*/
+__pycache__/
+.Rhistory
+.RData
+.Rproj.user/
+.DS_Store
+.idea/
