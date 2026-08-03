@@ -168,3 +168,38 @@ per-dataset usable share. The bimodality is visible without any model.
 **Follow-up worth one query:** bats are the outlier (U = 0.803, 36.7% of datasets
 fully usable). Likely acoustic monitoring published with a fixed detection
 radius. Confirm before using it as an illustration.
+
+## Added 2026-08-03 — Figure 1, and a claim that had to be narrowed
+
+**The strongest single number in the project.** Share of datasets falling within
+±10 points of their own group's aggregate usable share:
+
+  cetaceans 2.6% | dragonflies 3.6% | bats 5.1% | ground beetles 5.5%
+  orchids 6.0% | crayfish 6.3% | amphibians 7.5% | mosses 8.0%
+  swallowtails 9.2% | freshwater mussels 15.9% | salmonids 83.8% | corals 88.6%
+
+In ten of twelve groups the aggregate describes fewer than one dataset in ten.
+For cetaceans, 97 of every 100 datasets are nowhere near the group mean.
+
+*Caveat:* salmonids and corals look like exceptions but are not. Their aggregates
+are 4.4% and 4.9%, i.e. already at the floor, so a ±10-point window catches the
+zero spike by construction. Use a RELATIVE window before publication, or a
+reviewer will find this.
+
+**The zero spike splits into two opposite behaviours.** Share of the spike that
+is "no radius reported" rather than "radius reported and small": 18.1%
+(cetaceans) to 63.3% (swallowtails). For cetaceans the spike is genuinely
+precise data needing no correction; for swallowtails it is publishers declining
+to state uncertainty, where correction is needed but impossible. The exploratory
+figure in 08_ conflated these.
+
+**The regime claim had to be narrowed.** Weighting by DATASETS gives clean
+bimodality. Weighting by RECORDS fills the middle: roughly 35-55% of records in
+several groups sit at intermediate shares, because large datasets are more often
+intermediate while fully-usable datasets are numerous but small. "Publishers
+occupy regimes" is true of publishers, not of records. The claim that survives
+both weightings is the narrower one: **the aggregate describes no dataset.**
+
+Figures: `results/fig1_regimes_by_record.png` (main; what a user will actually
+find in a download) and `results/fig1_regimes_by_dataset.png` (supplement; how
+publishers behave).
