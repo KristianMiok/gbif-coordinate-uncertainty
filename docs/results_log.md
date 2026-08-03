@@ -79,3 +79,21 @@ among the corrections.
 claim and used the wrong axis. Their regime (fewer than ~15–20 precise records)
 turned out not to govern the comparison; the imprecise fraction does. Report the
 imprecise fraction, not the sample size, as the applicability variable.
+
+## Added 2026-08-03 (late) — the partition is a publisher property
+
+| id | claim | evidence |
+|---|---|---|
+| C7 | The partition varies 11-fold across 13 taxonomic groups at 1 km (4.5% salmonids to 47.4% bats) and does not track realm or record type; within-freshwater variation (4.5–37.8%) exceeds between-category variation. | `src/R/04_multitaxon_partition.R`, accessed 2026-08-03 |
+| C8 | **Within a single taxon, the between-dataset spread is larger than the between-taxon spread.** Usable share across 81 crayfish datasets (>=500 records, 93.1% of all records) runs 0%–100%, 10th–90th percentile 0%–84.4%. Dataset identity explains 52.2% of the variance in whether a record is usable. | `src/R/05_per_dataset.R` |
+| C9 | Publishers operate in regimes, not gradients: five of the fifteen largest datasets report no radius at all, one is 86.6% inert with median r = 15 m, one is 79.2% usable with median r = 5000 m. | same |
+| C5b | **REVISED — withdraw the original wording.** The 17,137 "internally inconsistent" records are concentrated: the top three datasets hold 79.4%, and one dataset (8a863029) holds 11,865 at a 44.2% internal rate. That same dataset has median r = 5000 m. This is a publisher georeferencing convention (locality-name georeferencing at a fixed 5 km radius, coordinates truncated on publication), NOT record-level false precision. Present it as a publisher property. | same |
+
+**Consequence for the package.** The diagnostic must report PER DATASET, not
+aggregated over a download. The aggregate 17.4% usable for crayfish conceals
+that half the datasets sit at 0% and part of the corpus sits near 80%. An
+aggregate number is actively misleading here.
+
+**Consequence for the framing.** Two ecologists working on the same species from
+different sources get opposite partitions, and neither can anticipate it. That
+is the paper.
