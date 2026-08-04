@@ -1,0 +1,39 @@
+Orchidaceae usageKey: 7689
+
+European Orchidaceae, georeferenced
+  total               7234027
+  reports radius      6204053  (85.8%)
+  no radius (NA)      1029974  (14.2%)
+  querying band 1/13: 0-100 m
+  querying band 2/13: 100-1000 m
+  querying band 3/13: 1000-5000 m
+  querying band 4/13: 5000-10000 m
+  querying band 5/13: 10000-15000 m
+  querying band 6/13: 15000-20000 m
+  querying band 7/13: 20000-23000 m
+  querying band 8/13: 23000-26000 m
+  querying band 9/13: 26000-29000 m
+  querying band 10/13: 29000-35000 m
+  querying band 11/13: 35000-50000 m
+  querying band 12/13: 50000-100000 m
+  querying band 13/13: 100000-10000000 m
+
+Band scan (denominator = records reporting a radius)
+                  band       n   pct    density
+       0 -       100 m 1448398 23.35 14483980.0
+     100 -      1000 m  826148 13.32   917942.2
+    1000 -      5000 m 3742525 60.32   935631.2
+    5000 -     10000 m 1963210 31.64   392642.0
+   10000 -     15000 m   34876  0.56     6975.2
+   15000 -     20000 m    5023  0.08     1004.6
+   20000 -     23000 m    1573  0.03      524.3
+   23000 -     26000 m    6877  0.11     2292.3
+   26000 -     29000 m   98405  1.59    32801.7
+   29000 -     35000 m    1499  0.02      249.8
+   35000 -     50000 m   10189  0.16      679.3
+   50000 -    100000 m   24157  0.39      483.1
+  100000 -  10000000 m    5964  0.10        0.6
+
+>>> 20-35 km window: 108354 records, 1.75% of radius-reporting records
+>>> density in window 8967.0 vs neighbours 1004.6 / 679.3  (ratio 10.65)
+>>> KILL CRITERION TRIGGERED (need >=2% AND density ratio >1.5). Record this and stop.
