@@ -1,0 +1,71 @@
+  [ 1/28] Bombus hyperboreus
+  [ 2/28] Bombus terrestris
+  [ 3/28] Episyrphus balteatus
+  [ 4/28] Vanessa atalanta
+  [ 5/28] Pieris brassicae
+  [ 6/28] Pelobates fuscus
+  [ 7/28] Triturus cristatus
+  [ 8/28] Ursus arctos
+  [ 9/28] Monachus monachus
+  [10/28] Lynx lynx
+  [11/28] Lynx pardinus
+  [12/28] Callosciurus erythraeus
+  [13/28] Testudo hermanni
+  [14/28] Perdix perdix
+  [15/28] Emberiza citrinella
+  [16/28] Impatiens glandulifera
+  [17/28] Heracleum mantegazzianum
+  [18/28] Crex crex
+  [19/28] Procyon lotor
+  [20/28] Gulo gulo
+  [21/28] Canis lupus
+  [22/28] Canis aureus
+  [23/28] Aquila fasciata
+  [24/28] Ambrosia artemisiifolia
+  [25/28] Alauda arvensis
+  [26/28] Caretta caretta
+  [27/28] Emys orbicularis
+  [28/28] Sturnus vulgaris
+
+=== Is the composition confound real? ===
+HUMAN_OBSERVATION share: 54.8% to 99.8% across species
+Post-2015 share:         28.0% to 89.5%
+Spearman(reported, %human)  = +0.29
+Spearman(reported, %recent) = -0.01
+A strong positive correlation here means the confound is real and the
+control below is necessary.
+
+=== Controlled stratum (HUMAN_OBSERVATION, year >= 2015) ===
+Species with >= 1,000 records in stratum: 24 / 28
+                     name   n_all raw_rep  n_ctrl ctrl_rep delta
+                Gulo gulo   29974     4.8   12787      3.7  -1.1
+                Lynx lynx   95403    55.4   25930     19.1 -36.2
+          Aquila fasciata   66263    50.4   35942     26.6 -23.8
+             Ursus arctos   39122    30.9   15091     32.8   2.0
+         Sturnus vulgaris 6597487    62.8 4391365     55.0  -7.8
+  Ambrosia artemisiifolia  128139    63.8   77716     55.2  -8.6
+          Caretta caretta   10151    57.2    3710     55.3  -1.9
+          Alauda arvensis 3338006    68.6 2160600     62.8  -5.8
+              Canis lupus  111684    81.5   26624     67.4 -14.1
+      Emberiza citrinella 3329611    77.8 1950756     72.5  -5.3
+             Canis aureus    2588    73.8    2194     77.8   4.0
+            Perdix perdix  579216    82.2  272803     78.4  -3.8
+                Crex crex  255493    87.7  105296     80.5  -7.2
+            Procyon lotor   46022    86.8   29279     82.3  -4.5
+     Episyrphus balteatus  374847    82.7  329945     83.5   0.8
+        Bombus terrestris  584954    84.3  504413     84.7   0.3
+   Impatiens glandulifera  699413    88.0  416811     88.7   0.7
+         Testudo hermanni   40788    89.7   18521     89.1  -0.5
+         Emys orbicularis   56876    86.4   30306     90.9   4.4
+ Heracleum mantegazzianum  237325    91.5  142944     92.1   0.6
+         Vanessa atalanta 3013105    94.6 1708796     93.1  -1.5
+       Triturus cristatus  201303    94.1  102830     94.8   0.7
+         Pelobates fuscus   23665    85.6   12610     95.2   9.6
+         Pieris brassicae 2572136    96.9 1125994     96.4  -0.5
+
+Spread raw:        92.1 points
+Spread controlled: 92.7 points
+Spearman(raw, controlled) = +0.93
+
+>>> SURVIVES -- the reporting gap is not a composition artefact
+Saved results/c13_reporting_controlled.rds
