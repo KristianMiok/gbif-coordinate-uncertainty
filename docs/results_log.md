@@ -203,3 +203,33 @@ both weightings is the narrower one: **the aggregate describes no dataset.**
 Figures: `results/fig1_regimes_by_record.png` (main; what a user will actually
 find in a download) and `results/fig1_regimes_by_dataset.png` (supplement; how
 publishers behave).
+
+## Added 2026-08-08 -- vocabulary and boundary harmonisation (found while building the ingrain package)
+
+Four definitional mismatches surfaced by porting the classifier; none
+changes a published number, all must be fixed or footnoted before review.
+
+1. **04_ comment vs implementation.** Line 48 says `inert if r < R/2`;
+   the cumulative-query implementation counts `r <= R/2` as inert
+   (GBIF ranges inclusive). The implementation is the reference; fix the
+   comment to `<=`.
+2. **05_ differs from 04_ twice.** It uses strict `r < RES/2`, and it
+   extracts a fifth state (geocoder defaults 301/999/3036/9999) BEFORE
+   partitioning, so its per-dataset inert/marginal shares exclude
+   records that 04_ includes (301 falls in 04_'s inert band at 1 km).
+   Per-dataset and multi-taxon percentages are therefore not on the same
+   definition. 05_ also nulls r <= 0 and r > 1e7.
+3. **"Usable" means two opposite things.** 06_/07_/08_: usable
+   = reported radius > 3R (the actionable class) over ALL records,
+   datasets >= 500 -- this is the variable behind U = 0.593. 12_'s
+   header ("at or below the threshold, as in the earlier scripts")
+   mischaracterises the earlier scripts; 12_'s swept quantity r <= t is
+   a different variable. Any manuscript sentence glossing U = 0.593
+   must say: whether a record's reported radius exceeds three times the
+   1 km grain.
+4. **Package vocabulary (adopted in ingrain).** States: inert /
+   marginal / actionable / unreported; "usable" retired from state
+   names. The published binary U is exactly the collapse of the
+   four-state U (actionable vs all other states pooled). "in-grain
+   share" is reserved for the r <= t quantity from 12_, pending a
+   decision on whether it enters the manuscript prose.
