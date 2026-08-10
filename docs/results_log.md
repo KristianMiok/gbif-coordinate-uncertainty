@@ -233,3 +233,35 @@ changes a published number, all must be fixed or footnoted before review.
    four-state U (actionable vs all other states pooled). "in-grain
    share" is reserved for the r <= t quantity from 12_, pending a
    decision on whether it enters the manuscript prose.
+
+## Added 2026-08-10 -- pre-submission scoping sweep (kill criteria fixed in advance)
+
+**K1 (pre-emption of the resolution-relative audit): NOT triggered.**
+Tool and preprint space checked (CoordinateCleaner 3.0.1, GeoThinneR
+2025, HOGS MEE 2025, arXiv/bioRxiv sweeps): nothing classifies
+occurrence records by correction-relevance relative to the analysis
+grain. Claim wording adopted: "first tool to operationalise a
+resolution-relative partition of occurrence records by
+correction-relevance", Hefley et al. (2017) credited as the seed.
+
+**Gábor et al. 2022 (MEE, 10.1111/2041-210X.13956) must be cited and
+pre-empted.** They show coarser analysis grains do not overcome
+positional error -- superficially in tension with records migrating to
+inert. Defence (now in the vignette): inert is a statement about
+correctability, not harm; coarsening shrinks the share of records a
+treatment can act on, not the damage.
+
+**Citation chimera caught and fixed.** The vignette cited "Quality
+issues in georeferencing" (Marcer et al. 2021, Diversity and
+Distributions 27:564-567) under the venue/ID of "Uncertainty matters"
+(Marcer et al. 2022, Ecography e06025). Same error class as the m20
+Zizka citation. ACTION STANDING: verify every reference against
+CrossRef before any submission. Claim-4 boundary confirmed: Marcer
+2022 is descriptive, preserved-specimens, institution/country level;
+ours is information-theoretic (U + permutation null), dataset-level,
+resolution-relative, all record types.
+
+**MEE Applications format (checked 2026-08-10):** 3000-4000 words
+INCLUDING references; IMRAD not required; application description plus
+worked examples recommended; Code Checklist at submission; software
+tests expected. The vignette maps onto this near one-to-one.
